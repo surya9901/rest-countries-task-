@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <title>Rest countries Data</title>
+</head>
+
+<body>
+
+    <div id="container">
+
+    </div>
+
+    <script>
+
+        // Div
+        var div = document.getElementById("container");
+        div.style.alignItems = "center"
+        div.setAttribute("class", "container");
+        div.style.padding = "4%"
+
+        // Heading  
+
+        var h1 = document.createElement("h1");
+        h1.innerText = "Restcounties API Data"
+        h1.style.fontWeight = "bold"
+        h1.style.textAlign = "center"
+        div.appendChild(h1);
+
+        // input
+
+        var textField = document.createElement("input");
+        div.appendChild(textField);
+        textField.setAttribute("placeholder", "Search For Country Here !!")
+        textField.setAttribute("class", "container")
+        textField.setAttribute("id", "myInput")
+        textField.style.width = "300px";
+        textField.style.height = "50px"
+        textField.style.margin = "10px"
+        textField.style.marginLeft = "325px"
+
+
+
+        // Search button
+
+        var searchButton = document.createElement("button");
+        var div = document.getElementById("container");
+        div.appendChild(searchButton);
+        searchButton.style.width = "80px"
+        searchButton.style.height = "50px"
+        searchButton.innerText = "Search"
+        searchButton.setAttribute("class", " btn btn-outline-success rounded");
+        searchButton.setAttribute("onclick", "handleClick()")
+
+
+
+        function handleClick() {
+
+            //to get the value of input and store in the variable value
+
+            var value = document.getElementById("myInput").value;
+
+            if (value == "" || null) {
+                alert("kindly type the country name")
+            }
+            else {
+                value
+            }
+
+            //to merge the value in the api and search for its details
+
+            var url = `https://restcountries.eu/rest/v2/name/${value}?fullText=true;`
+
+            var data = fetch(url)
+
+
+            data
+
+                .then(function (res) {
+
+                    return res.json();
+
+                })
+
+
+                .then(function (resdata) {
+
+                    //row for the details display
+
+                    var row = document.createElement("div");
+                    row.setAttribute("class", "row");
+                    div.appendChild(row);
+
+
+                    //div for the flag
+
+                    var div2 = document.createElement("div");
+                    div2.setAttribute("class", "container1")
+                    div2.setAttribute("id", "container1")
+                    div.appendChild(div2);
+
+
+
+
+
+
+                    for (var i = 0; i < resdata.length; i++) {
+
+
+
+                        //Flags
+
+                        var img = document.createElement("img");
+                        document.getElementById("container1").appendChild(img)
+                        img.setAttribute = ("id", "flag")
+                        img.setAttribute = ("class", "container")
+                        img.src = resdata[i].flag;
+                        img.style.marginTop = "60px"
+                        img.style.marginBottom = "60px"
+                        img.style.display = "block"
+                        img.style.marginLeft = "auto"
+                        img.style.marginRight = "auto"
+                        img.style.width = "350px"
+                        img.style.height = "250px"
+
+                        // Country Name
+
+                        var h1 = document.createElement("h5");
+                        h1.innerText = ("Country Name : " + resdata[i].name)
+                        h1.setAttribute = ("class", "country-name")
+                        h1.style.textAlign = "center"
+                        document.getElementById("container1").appendChild(h1);
+
+
+                        //region
+
+                        var region = document.createElement("h5");
+                        region.innerText = ("Region : " + resdata[i].region)
+                        region.style.textAlign = "center"
+                        document.getElementById("container1").appendChild(region);
+
+
+                        //subregion
+
+                        var subregion = document.createElement("h5");
+                        subregion.innerText = ("Sub-Region : " + resdata[i].subregion)
+                        subregion.style.textAlign = "center"
+                        document.getElementById("container1").appendChild(subregion);
+
+
+                        // Lat-lng
+
+                        var latlng = document.createElement("h5");
+                        latlng.innerText = ("Latitude and Longitude : " + resdata[i].latlng)
+                        latlng.style.textAlign = "center"
+                        document.getElementById("container1").appendChild(latlng);
+
+                        // currencies
+
+                        var currencies = document.createElement("h5");
+                        currencies.innerText = ("Currency : " + resdata[i].currencies[0].symbol)
+                        currencies.style.textAlign = "center"
+                        document.getElementById("container1").appendChild(currencies);
+
+
+                        // population
+
+                        var population = document.createElement("h5");
+                        population.innerText = ("Population : " + resdata[i].population)
+                        population.style.textAlign = "center"
+                        document.getElementById("container1").appendChild(population);
+
+                    }
+
+                })
+
+
+                .catch(function (err) {
+                    console.log(err)
+                })
+
+
+        }
+
+    </script>
+</body>
+
+</html>
